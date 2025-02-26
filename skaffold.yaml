@@ -1,0 +1,26 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: library/admin-api
+      context: admin-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "/*.py"
+            dest: .
+    - image: library/frontend-api
+      context: frontend-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "/*.py"
+            dest: .
+    

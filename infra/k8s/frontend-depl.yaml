@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-api
+  template:
+    metadata:
+      labels:
+        app: frontend-api
+    spec:
+      containers:
+      - name: frontend-api
+        image: library/frontend-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+          - name: NATS_URL
+            value: "nats://nats-server:4222"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-api
+spec:
+  selector:
+    app: frontend-api
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+

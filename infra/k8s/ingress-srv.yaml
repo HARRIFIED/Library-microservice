@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: library.dev
+      http:
+        paths:
+          - path: /api/admin/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: admin-api
+                port:
+                  number: 5001
+          - path: /api/frontend/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: frontend-api
+                port:
+                  number: 5000

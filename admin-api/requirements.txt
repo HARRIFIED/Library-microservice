@@ -1,0 +1,5 @@
+flask==3.0.0
+nats-py==2.6.0
+asyncio==3.4.3
+aiohttp==3.9.1
+Flask-SQLAlchemy

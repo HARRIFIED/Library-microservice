@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nats
+spec:
+  serviceName: nats-server
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats
+  template:
+    metadata:
+      labels:
+        app: nats
+    spec:
+      containers:
+      - name: nats
+        image: nats:latest
+        args: [
+          "-js",
+          "-m", "8222"
+        ]
+        ports:
+        - containerPort: 4222
+          name: client
+        - containerPort: 8222
+          name: monitoring
+        volumeMounts:
+        - name: nats-storage
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: nats-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+---
+# nats-deployment.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats-server
+spec:
+  selector:
+    app: nats
+  ports:
+    - name: client
+      port: 4222
+      targetPort: 4222
+    - name: monitoring
+      port: 8222
+      targetPort: 8222
