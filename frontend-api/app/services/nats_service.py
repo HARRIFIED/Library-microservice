@@ -12,7 +12,7 @@ js = None  # JetStream context
 async def connect_jetstream():
     global js
     try:
-        await nc.connect("nats://localhost:4222")
+        await nc.connect("nats://nats-server:4222")
         js = nc.jetstream()
         print("Connected to NATS JetStream")
     except Exception as e:
