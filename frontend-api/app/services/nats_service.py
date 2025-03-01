@@ -12,7 +12,7 @@ js = None  # JetStream context
 async def connect_jetstream():
     global js
     try:
-        await nc.connect("nats://nats-server:4222")
+        await nc.connect("nats://localhost:4222")
         js = nc.jetstream()
         print("Connected to NATS JetStream")
     except Exception as e:
@@ -45,6 +45,25 @@ async def publish_book_Borrowed(event_type, record):
         print(f"Published book borrowed: {data}")
     except Exception as e:
         print(f"Failed to publish borrowed data: {e}")
+
+async def publish_enroll_user(event_type, record):
+    """
+    Publish a book borrow event on the 'books.borrowed' JetStream subject.
+    """
+    data = {
+        "event": event_type,
+        "data": {
+            "id": record.id,
+            "firstname": record.firstname,
+            "lastname": record.lastname,
+            "email": record.email,
+        }
+    }
+    try:
+        await js.publish("books.enroll_user", json.dumps(data).encode())
+        print(f"Published enroll user: {data}")
+    except Exception as e:
+        print(f"Failed to publish enroll_user data: {e}")
 
 async def subscribe_books_updates(app):
     async def message_handler(msg):
@@ -87,7 +106,7 @@ async def subscribe_books_updates(app):
         await msg.ack()
 
     # Subscribe to the 'books.updates' subject using a durable consumer.
-    await js.subscribe("books.updates", durable="frontend-durable", cb=message_handler)
+    await js.subscribe("books.updates", durable="frontend-durable-book-updates", cb=message_handler)
     print("Subscribed to 'books.updates' and listening indefinitely.")
 
 async def setup_nats(app):

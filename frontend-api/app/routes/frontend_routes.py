@@ -6,6 +6,7 @@ from app.models.book import Book
 from app.models.user import User
 from app.models.borrow_record import BorrowRecord
 from app.services.nats_service import publish_book_Borrowed
+from app.services.nats_service import publish_enroll_user
 from app.services.background import bg_loop
 from . import frontend_blueprint
 
@@ -20,9 +21,12 @@ def enroll_user():
     user = User(email=email, firstname=firstname, lastname=lastname)
     db.session.add(user)
     db.session.commit()
+
+    #Publish 
+    asyncio.run_coroutine_threadsafe(publish_enroll_user("enroll_user", user), bg_loop)
     return jsonify({
          "message": "User enrolled",
-         "user": {"id": user.id, "email": user.email,
+         "data": {"id": user.id, "email": user.email,
                   "firstname": user.firstname, "lastname": user.lastname}
     }), 201
 
