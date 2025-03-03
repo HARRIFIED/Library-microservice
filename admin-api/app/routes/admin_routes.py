@@ -78,20 +78,20 @@ def list_users_borrowed():
          user = User.query.get(rec.user_id)
          book = Book.query.get(rec.book_id)
          result.append({
-              "user": {
-                  "id": user.id,
-                  "email": user.email,
-                  "firstname": user.firstname,
-                  "lastname": user.lastname,
-              },
-              "book": {
-                  "id": book.id,
-                  "title": book.title,
-                  "author": book.author,
-              },
-              "borrow_date": rec.borrow_date.isoformat(),
-              "borrow_days": rec.borrow_days,
-              "due_date": rec.due_date.isoformat()
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "firstname": user.firstname,
+                "lastname": user.lastname,
+            },
+            "book": {
+                "id": book.id,
+                "title": book.title,
+                "author": book.author,
+            },
+            "borrow_date": rec.borrow_date.isoformat(),
+            "borrow_days": rec.borrow_days,
+            "due_date": rec.due_date.isoformat()
          })
     return jsonify(result), 200
 
@@ -99,9 +99,9 @@ def list_users_borrowed():
 def list_unavailable_books():
     books = Book.query.filter_by(is_borrowed=True).all()
     books_data = [{
-         "id": book.id,
-         "title": book.title,
-         "author": book.author,
-         "due_date": book.due_date.isoformat() if book.due_date else None
+        "id": book.id,
+        "title": book.title,
+        "author": book.author,
+        "due_date": book.due_date.isoformat() if book.due_date else None
     } for book in books]
     return jsonify(books_data), 200

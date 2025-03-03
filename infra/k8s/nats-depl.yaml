@@ -37,7 +37,6 @@ spec:
         requests:
           storage: 1Gi
 ---
-# nats-deployment.yaml
 apiVersion: v1
 kind: Service
 metadata:
