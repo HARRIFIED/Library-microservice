@@ -62,6 +62,6 @@ This method builds the images locally using your Dockerfiles and runs all servic
 In the project root, run:
 
 ```bash
-docker-compose up -d
+docker-compose up
 ```
 
