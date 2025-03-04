@@ -1,4 +1,7 @@
-# Library Microservices Project
+# Flask Library Management API (Backend accessment task)
+
+This project is a microservice-style library management API built with **Flask**. It is designed to manage a library system using a modular, enterprise-standard structure. The application uses SQLAlchemy for ORM, integrates with NATS JetStream for asynchronous messaging, and follows the application factory pattern for scalability and maintainability.
+
 
 This project contains two microservices—**admin-api** and **frontend-api**—that communicate with a [NATS Jetstream](https://nats.io/) server. You can run the entire stack using one of two approaches:
 
@@ -7,6 +10,8 @@ This project contains two microservices—**admin-api** and **frontend-api**—t
 
 ## Prerequisites
 
+- **Python 3.9+**  
+- **pip** (Python package manager) 
 - **Docker:** Installed and running.
 - **Kubernetes Cluster:** (For Skaffold option)  
   - You can use [Minikube](https://minikube.sigs.k8s.io/docs/start/) or any other Kubernetes provider.
@@ -31,8 +36,15 @@ This project contains two microservices—**admin-api** and **frontend-api**—t
 │       └── ingress-srv.yaml
 ├── docker-compose.yaml
 └── skaffold.yaml
-
 ```
+## Installation
+
+1. **Clone the repository:**
+
+  ```bash
+  git clone https://github.com/HARRIFIED/Library-microservice.git
+  ```
+
 ## Option 1: Running with Kubernetes and Skaffold
 This method deploys the services to your Kubernetes cluster and continuously rebuilds the images when you change the source code.
 
