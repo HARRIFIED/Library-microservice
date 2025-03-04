@@ -30,6 +30,7 @@ def enroll_user():
                   "firstname": user.firstname, "lastname": user.lastname}
     }), 201
 
+# List only available books
 @frontend_blueprint.route('/books', methods=['GET'])
 def list_books():
     publisher = request.args.get("publisher")
