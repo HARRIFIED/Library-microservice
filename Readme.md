@@ -2,7 +2,19 @@
 
 This project is a microservice-style library management API built with **Flask**. It is designed to manage a library system using a modular, enterprise-standard structure. The application uses SQLAlchemy for ORM, integrates with NATS JetStream for asynchronous messaging, and follows the application factory pattern for scalability and maintainability.
 
+## Endpoints:
+1. Add Book to library: POST /api/admin/books 
+2. Get unavailable books: GET /api/admin/books/unavailable
+3. Get users in the library: GET /api/admin/users
+4. Remove book from library: DELETE /api/admin/books/:id
+5. Get users and the books borrowed: GET /api/admin/users_borrowed
 
+6. Get available books users: GET /api/frontend/books
+7. Borrow any available book: POST /api/frontend/books/:id/borrow
+8. Enroll: POST /api/frontend/users
+9. Get book by ID: GET /api/frontend/books/1
+   
+## Get Started
 This project contains two microservices—**admin-api** and **frontend-api**—that communicate with a [NATS Jetstream](https://nats.io/) server. You can run the entire stack using one of two approaches:
 
 1. **Kubernetes with Skaffold**  
